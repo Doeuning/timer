@@ -1,0 +1,57 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: rgba(0, 0, 0, 0);
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@keyframes show {
+  from {
+    transform: translateY(100);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+}
+
+.box {
+  position: relative;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  text-shadow:
+    0 0 5px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  animation: show 1s 1s forwards;
+}
+.btn-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  pointer-events: all;
+  border: none;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+.title {
+  margin-bottom: -20px;
+}
+.timer {
+  font-weight: 700;
+  font-size: 100px;
+}
