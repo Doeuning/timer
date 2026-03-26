@@ -15,7 +15,7 @@ const createWindow = () => {
     transparent: true,
     alwaysOnTop: true,
     fullscreen: true,
-    // show: false,
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

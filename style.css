@@ -54,11 +54,12 @@ body {
 }
 .timer {
   font-weight: 700;
-  font-size: 13vw;
+  font-size: 20vw;
 }
 .timer.warning {
   color: yellow;
 }
 .timer.error {
   color: rgb(255, 75, 75);
+  font-size: 13vw;
 }
