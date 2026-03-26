@@ -13,14 +13,26 @@ const createWindow = () => {
     height: 200,
     frame: false,
     transparent: true,
-    show: false,
+    alwaysOnTop: true,
+    fullscreen: true,
+    // show: false,
     webPreferences: {
-      nodeIntegration: true, // :fire: 이거
-      contextIsolation: false, // :fire: 이거
+      nodeIntegration: true,
+      contextIsolation: false,
     },
   });
 
+  mainWindow.setIgnoreMouseEvents(true, { forward: true });
   mainWindow.loadFile("index.html");
+
+  mainWindow.webContents.on("did-finish-load", () => {
+    mainWindow.webContents.send("set-time", {
+      hour,
+      min,
+      sec,
+      ms,
+    });
+  });
 };
 
 function checkTimeAndShow() {
@@ -36,6 +48,8 @@ function checkTimeAndShow() {
     if (diff <= 30000 && diff > 0 && !isShown) {
       mainWindow.show();
       mainWindow.focus();
+      mainWindow.setAlwaysOnTop(true, "screen-saver");
+      mainWindow.setVisibleOnAllWorkspaces(true);
       isShown = true;
     }
   }, 1000);
