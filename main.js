@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require("electron/main");
+const { autoUpdater } = require("electron-updater");
 
 let mainWindow;
 let isShown = false;
@@ -35,6 +36,18 @@ const createWindow = () => {
   });
 };
 
+function initAutoUpdater() {
+  autoUpdater.on("update-available", () => {
+    console.log("업데이트 있음");
+  });
+
+  autoUpdater.on("update-downloaded", () => {
+    autoUpdater.quitAndInstall();
+  });
+  // 업데이트 체크
+  autoUpdater.checkForUpdatesAndNotify();
+}
+
 function checkTimeAndShow() {
   setInterval(() => {
     const now = new Date();
@@ -68,6 +81,8 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+
+  initAutoUpdater();
 });
 
 app.on("window-all-closed", () => {
