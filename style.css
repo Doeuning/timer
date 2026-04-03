@@ -1,5 +1,6 @@
 html,
 body {
+  overflow: hidden;
   height: 100%;
   margin: 0;
   background: rgba(0, 0, 0, 0);
@@ -53,6 +54,7 @@ body {
   font-size: 8vw;
 }
 .timer {
+  padding-inline: 10vw;
   font-weight: 700;
   font-size: 20vw;
 }
@@ -62,4 +64,17 @@ body {
 .timer.error {
   color: rgb(255, 75, 75);
   font-size: 13vw;
+}
+
+.unit {
+  display: none;
+}
+.unit-number {
+  font-family: "Pretendard", sans-serif;
+  font-variant-numeric: tabular-nums;
+  transition: all 0.3s ease;
+}
+.unit-text {
+  font-size: 0.5em;
+  margin-left: -0.5em;
 }

@@ -1,4 +1,5 @@
 const { ipcRenderer } = require("electron");
+const fitty = require("fitty");
 
 let targetTime = { hour: 18, min: 0, sec: 0, ms: 0 };
 
@@ -20,11 +21,15 @@ ipcRenderer.on("set-time", (event, data) => {
 //   }, 1000);
 // }
 
-function startTimer(el) {
+function startTimer() {
+  const timer = document.getElementById("timer");
+  const timerHour = document.getElementById("timer-hour");
+  const timerMin = document.getElementById("timer-min");
+  const timerSec = document.getElementById("timer-sec");
   const title = document.getElementById("title");
-  setInterval(() => {
-    if (!el) return;
 
+  if (!timer) return;
+  setInterval(() => {
     const now = new Date();
 
     const target = new Date();
@@ -38,11 +43,29 @@ function startTimer(el) {
 
     let diff = target - now;
     const totalSec = Math.floor(diff / 1000);
+    let hour = `${Math.floor(totalSec / 3600)}`;
+    let min = `${Math.floor((totalSec % 3600) / 60)}`;
+    let sec = `${totalSec % 60}`;
+    title.textContent = "퇴근까지 남은 시간";
+    // let ms = `${diff % 1000}ms`;
 
-    el.textContent = `${totalSec}초 전`;
+    if (hour > 0) {
+      timerHour.querySelector(".unit-number").textContent = hour;
+      timerHour.style.display = "inline";
+    }
 
-    if (totalSec <= 10 && totalSec >= 0) {
-      el.classList.add("warning");
+    if (min > 0) {
+      timerMin.querySelector(".unit-number").textContent = min;
+      timerMin.style.display = "inline";
+    }
+
+    if (sec >= 0) {
+      timerSec.querySelector(".unit-number").textContent = sec;
+      timerSec.style.display = "inline";
+    }
+
+    if (totalSec >= 0 && totalSec <= 10) {
+      timer.classList.add("warning");
       return;
     } else if (totalSec < 0) {
       // overtime
@@ -50,10 +73,22 @@ function startTimer(el) {
       const h = Math.floor(overtime / (1000 * 60 * 60));
       const m = Math.floor((overtime / (1000 * 60)) % 60);
       const s = Math.floor((overtime / 1000) % 60);
-      el.classList.remove("warning");
-      el.classList.add("error");
-      title.textContent = "초과근무";
-      el.textContent = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}시간 중`;
+      timer.classList.remove("warning");
+      timer.classList.add("error");
+      title.textContent = "초과근무 시간";
+
+      if (h > 0) {
+        timerHour.querySelector(".unit-number").textContent = h;
+        timerHour.style.display = "inline";
+      }
+      if (m > 0) {
+        timerMin.querySelector(".unit-number").textContent = m;
+        timerMin.style.display = "inline";
+      }
+      if (s >= 0) {
+        timerSec.querySelector(".unit-number").textContent = s;
+        timerSec.style.display = "inline";
+      }
       return;
     }
 
@@ -62,15 +97,15 @@ function startTimer(el) {
     // const m = Math.floor((diff / (1000 * 60)) % 60);
     // const s = Math.floor((diff / 1000) % 60);
     // el.textContent = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-  }, 1000);
+  }, 50);
 }
 
 window.addEventListener("load", function () {
-  const timer = document.getElementById("timer");
   // const btnClose = document.getElementById("btnClose");
-  if (timer) {
-    startTimer(timer);
-  }
+
+  startTimer();
+  fitty("#timer");
+
   // btnClose.addEventListener("click", () => {
   //   ipcRenderer.send("quit-app");
   // });

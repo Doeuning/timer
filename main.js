@@ -21,6 +21,7 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
     },
+    icon: "icon.ico",
   });
 
   mainWindow.setIgnoreMouseEvents(true, { forward: true });
@@ -48,6 +49,20 @@ function initAutoUpdater() {
   autoUpdater.checkForUpdatesAndNotify();
 }
 
+function showWindow() {
+  mainWindow.show();
+  mainWindow.focus();
+  mainWindow.setAlwaysOnTop(true, "screen-saver");
+  mainWindow.setVisibleOnAllWorkspaces(true);
+  isShown = true;
+}
+function hideWindow() {
+  if (mainWindow) {
+    mainWindow.hide();
+    isShown = false;
+  }
+}
+
 function checkTimeAndShow() {
   setInterval(() => {
     const now = new Date();
@@ -56,14 +71,23 @@ function checkTimeAndShow() {
     target.setHours(hour, min, sec, ms); // 퇴근 시간
 
     const diff = target - now;
+    // 1초 1000
+    // 10초 10000
+    // 1분 60 * 1000
+    // 10분 600 * 1000
+    // 1시간 3600 * 1000
+
+    // 10분 10초 전
+    if (diff <= 611000 && diff > 609000 && !isShown) {
+      showWindow();
+      setTimeout(() => {
+        hideWindow();
+      }, 10000);
+    }
 
     // 30초 전 ~ 퇴근 전까지
     if (diff <= 30000 && diff > 0 && !isShown) {
-      mainWindow.show();
-      mainWindow.focus();
-      mainWindow.setAlwaysOnTop(true, "screen-saver");
-      mainWindow.setVisibleOnAllWorkspaces(true);
-      isShown = true;
+      showWindow();
     }
   }, 1000);
 }
