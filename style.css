@@ -27,6 +27,10 @@ body {
 }
 
 .box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 100%;
   color: #fff;
@@ -37,6 +41,9 @@ body {
   opacity: 0;
   pointer-events: none;
   animation: show 1s 1s forwards;
+}
+.box.overtime {
+  flex-direction: column-reverse;
 }
 /* .btn-close {
   position: absolute;
@@ -50,20 +57,24 @@ body {
   cursor: pointer;
 } */
 .title {
-  margin-bottom: -10vh;
+  margin: 0 0 -2vh 0;
   font-size: 8vw;
 }
 .timer {
   padding-inline: 10vw;
   font-weight: 700;
   font-size: 20vw;
+  line-height: 1 !important;
 }
-.timer.warning {
+.box.warning .title,
+.box.overtime .title {
+  margin: -3vh 0 0 0;
+}
+.box.warning .timer {
   color: yellow;
 }
-.timer.error {
+.box.overtime .timer {
   color: rgb(255, 75, 75);
-  font-size: 13vw;
 }
 
 .unit {
