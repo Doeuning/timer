@@ -3,8 +3,8 @@ const { autoUpdater } = require("electron-updater");
 
 let mainWindow;
 let isShown = false;
-let hour = 14,
-  min = 7,
+let hour = 18,
+  min = 0,
   sec = 0,
   ms = 0;
 
