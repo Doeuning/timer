@@ -35,5 +35,11 @@
   "dependencies": {
     "electron-updater": "^6.8.3",
     "fitty": "^2.4.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "electron-winstaller"
+    ]
   }
 }
