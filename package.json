@@ -22,7 +22,8 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "Setup.${version}.${ext}"
     },
     "publish": [
       {

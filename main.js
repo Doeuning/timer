@@ -266,6 +266,7 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createOverlay();
   });
 
+  if (!app.isPackaged) autoUpdater.forceDevUpdateConfig = true;
   autoUpdater.on("update-downloaded", () => autoUpdater.quitAndInstall());
   autoUpdater.checkForUpdatesAndNotify();
 });
